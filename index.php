@@ -1,1 +1,1 @@
-<?php include 'ama.html'; ?>
+<?php include_once("ama.html"); ?>
