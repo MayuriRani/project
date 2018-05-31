@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 <title>Facebook Login JavaScript Example</title>
@@ -145,7 +144,7 @@ function fbUser1(callback){
 $sql=SELECT * FROM friends;
 $stmt=$pdo->prepare($sql);
 $stmt->execute();
-$rowcount=$stmt->rowCount();
+$rowCount=$stmt->rowCount();
 $details->stmt->fetch();
 
 print_r($details);
