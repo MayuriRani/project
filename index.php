@@ -1,9 +1,24 @@
+<!DOCTYPE html>
 <html>
 <head>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
 </head>
 <body>
+
+<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDfdpa4i8BeV--_ej27F8f7BGvzBD8pjlo",
+    authDomain: "buddyreview-f8734.firebaseapp.com",
+    databaseURL: "https://buddyreview-f8734.firebaseio.com",
+    projectId: "buddyreview-f8734",
+    storageBucket: "",
+    messagingSenderId: "55152557528"
+  };
+  firebase.initializeApp(config);
+</script>
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -36,7 +51,7 @@
   }
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '440118056458620',
+      appId      : '1818934168400657',
       cookie     : true,  // enable cookies to allow the server to access
                           // the session
       xfbml      : true,  // parse social plugins on this page
@@ -81,13 +96,13 @@
   function startThis() {
     var getUser = fbUser(function(model){
         console.log(model);
-      document.write('<title>Friends List</title><h1>Friends using this app</h1>');
+      document.write('<h2>Ask your Facebook Friends for trusted reviews!</h2>');
       var x;
       for(x in model.data){
-      document.write('Name: ' + model.data[x].name);
         document.write('<img src="https://graph.facebook.com/'+ model.data[x].id+'/picture?type=large" alt="Profile Picture" width="60" height="60"><br/>');
+      document.write(model.data[x].name+'<br/><br/>');
+
       }
-      document.write('<br/>Total Friends: '+ model.summary.total_count);
     });
 };
 function fbUser(callback){
@@ -141,15 +156,42 @@ function fbUser1(callback){
 
 
 <?php
-$sql=SELECT * FROM friends;
+
+$dbconn=pg_connect("host=ec2-54-235-193-34.compute-1.amazonaws.com port=5432 dbname=d9qk8ga2mhi11j user=moznmkpahvxvhm password=63ebd5c1ddf8a56db3f1e328179e76393140bd117fe9df7388a45e5892c0de1a");
+$result=pg_query($dbconn,"TABLE friends");
+$x=pg_fetch_all($result);
+echo $x['id'];
+/*$host="ec2-54-235-193-34.compute-1.amazonaws.com";
+$user="moznmkpahvxvhm";
+$password="63ebd5c1ddf8a56db3f1e328179e76393140bd117fe9df7388a45e5892c0de1a";
+$dbname="d9qk8ga2mhi11j";
+$port="5432";
+
+try{
+  $dsn= "pgsql:host=" . $host . ";port=" . $port .";dbname=" .$dbname .";user=" . $user . ";password=" . $password;
+
+  $pdo=new PDO($dsn,$user,$password);
+  $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_OBJ);
+  $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+
+}
+catch(PDOException $e){
+  echo 'connection falied' .$e->getMessage();
+}*/
+
+ ?>
+
+<?php
+$sql= 'SELECT * FROM friends';
 $stmt=$pdo->prepare($sql);
 $stmt->execute();
 $rowCount=$stmt->rowCount();
 $details->stmt->fetch();
 
-print_r($details);
+echo $details ;
+echo "This is index page";
 ?>
 
 </body>
 </html>
-
